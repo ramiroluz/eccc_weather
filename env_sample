@@ -1,0 +1,1 @@
+DB_URL=mysql://USERNAME:A_SECURE_PASS@localhost/DATABASENAME?charset=utf8mb4

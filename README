@@ -1,0 +1,65 @@
+Description
+-----------
+
+URLs
+----
+
+Stations:
+ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv
+
+
+Libraries and examples:
+https://github.com/csianglim/weather-gc-ca-python
+git@github.com:ramiroluz/weather-gc-ca-python.git
+
+https://framagit.org/MiguelTremblay/get_canadian_weather_observations/tree/master
+git@framagit.org:ramiroluz/get_canadian_weather_observations.git
+
+
+Requirements
+------------
+
+This is the task to be executed in python:
+
+    Get the station list (see ftp://ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv)
+    Get the weather information by station
+    Save both in a mysql database with a relationship 1 -> N
+    Make a job to update the information hourly
+    Save the date of the last update in the database as well.
+
+The relevant info is from the current day, or the first backwards until 15 days before, otherwise the data is irrelevant for the building status.
+
+Configuration
+-------------
+
+  - Create a database.
+  - Create a directory for the csv files. (mkdir csv)
+  - Create a virtualenv, or activate a previous one.
+  - Install the requirements inside the virtualenv.
+  - Copy the env_sample to .env
+    - Change the username, password and database name in the .env file.
+
+Instructions
+------------
+
+As it is right now, to import data, it is necessary to run the stations.py script then the observations.py script.
+
+```
+$ python stations.py
+$ python observations.py
+```
+
+The tables will be created, but if they already exists the data will be appended, so, if the script is ran twice it will duplicate data.
+
+There are no foreign keys set, but the same station id is being saved on both tables. The updated column is being set on both tables.
+
+TODO
+----
+
+The missing(not implemented) requirements are:
+    Save both in a mysql database with a relationship 1 -> N
+    Make a job to update the information hourly
+
+Also, the date/time columns are not in UTC, and are being saved as text. So it would be better to localize and convert the date/time columns.
+
+The column updated is a datetime object, but it is not a UTC time yet.
